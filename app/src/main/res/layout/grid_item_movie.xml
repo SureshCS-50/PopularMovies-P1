@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgPoster"
+        style="@style/ImageViewPoster"
+        android:contentDescription="@string/str_movie_image"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/TextView.Content"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="center_horizontal"
+        android:background="@color/tint"
+        android:textColor="@android:color/white"
+        android:text="@string/app_name" />
+
+</FrameLayout>
