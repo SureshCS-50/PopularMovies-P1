@@ -20,6 +20,7 @@ import com.sureshcs50.popularmovies_p1.adapter.MovieAdapter;
 import com.sureshcs50.popularmovies_p1.model.Movie;
 import com.sureshcs50.popularmovies_p1.ui.common.BaseActivity;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
+import com.sureshcs50.popularmovies_p1.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +34,7 @@ public class MovieGridActivity extends BaseActivity {
     private List<Movie> mMovies;
     private GridView mGridMovies;
     private MovieAdapter mMovieAdapter;
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,48 +58,58 @@ public class MovieGridActivity extends BaseActivity {
     }
 
     private void getMovies(boolean isPopularity) {
-        String url = Constants.MOVIES_URL;
-
-        if (isPopularity) {
-            url += "?sort_by=popularity.desc&api_key=" + Constants.API_KEY;
-        } else {
-            url += "?sort_by=vote_average.desc&api_key=" + Constants.API_KEY;
+        // to make toast message responsive.. we made like this..
+        if(mToast != null){
+            mToast.cancel();
         }
+        if (Utils.hasConnection(this)) {
+            String url = Constants.MOVIES_URL;
 
-        mMovies = new ArrayList<>();
-        JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray results = response.getJSONArray("results");
+            if (isPopularity) {
+                url += "?sort_by=popularity.desc&api_key=" + Constants.API_KEY;
+            } else {
+                url += "?sort_by=vote_average.desc&api_key=" + Constants.API_KEY;
+            }
 
-                    for (int i = 0; i < results.length(); i++) {
-                        JSONObject resultItem = results.getJSONObject(i);
-                        Movie movie = new Movie();
-                        movie.setOriginalTitle(resultItem.getString("original_title"));
-                        movie.setTitle(resultItem.getString("title"));
-                        movie.setImageUrl(resultItem.getString("poster_path"));
-                        movie.setOverview(resultItem.getString("overview"));
-                        movie.setReleaseDate(resultItem.getString("release_date"));
-                        movie.setVoteAverage(String.valueOf(resultItem.getDouble("vote_average")));
-                        mMovies.add(movie);
+            mMovies = new ArrayList<>();
+            JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray results = response.getJSONArray("results");
+
+                        for (int i = 0; i < results.length(); i++) {
+                            JSONObject resultItem = results.getJSONObject(i);
+                            Movie movie = new Movie();
+                            movie.setOriginalTitle(resultItem.getString("original_title"));
+                            movie.setTitle(resultItem.getString("title"));
+                            movie.setImageUrl(resultItem.getString("poster_path"));
+                            movie.setOverview(resultItem.getString("overview"));
+                            movie.setReleaseDate(resultItem.getString("release_date"));
+                            movie.setVoteAverage(String.valueOf(resultItem.getDouble("vote_average")));
+                            mMovies.add(movie);
+                        }
+
+                        mMovieAdapter.setItems(mMovies);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                    mMovieAdapter.setItems(mMovies);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MovieGridActivity.this, R.string.failed_to_get_movies, Toast.LENGTH_SHORT).show();
-            }
-        });
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    mToast = Toast.makeText(MovieGridActivity.this, R.string.failed_to_get_movies, Toast.LENGTH_SHORT);
+                    mToast.show();
+                }
+            });
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(request);
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(request);
+        } else {
+            mToast = Toast.makeText(this, R.string.error_connection_failed, Toast.LENGTH_SHORT);
+            mToast.show();
+        }
     }
 
     @Override

@@ -25,6 +25,7 @@ public class DetailActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        // setting up toolbar..
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(Utils.getColoredDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha, Color.WHITE));
@@ -40,7 +41,7 @@ public class DetailActivity extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         mMovie = extras.getParcelable(Constants.KEY_MOVIE);
 
-        //bind view and data
+        // bind view and data..
         if (mMovie != null) {
             String backdropUrl = Constants.POSTER_BASE_URL + "w300" + mMovie.getImageUrl();
             Picasso.with(this).load(backdropUrl ).into((ImageView) findViewById(R.id.imgBackdrop));

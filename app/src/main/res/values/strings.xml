@@ -2,6 +2,7 @@
     <string name="app_name">PopularMovies-P1</string>
     <string name="str_movie_image">Movie Name</string>
     <string name="failed_to_get_movies">Failed to get Movies!</string>
+    <string name="error_connection_failed">Unable to connect, Please check your Internet Connection!</string>
     <string name="sort">Sort</string>
     <string name="most_popular">Most Popular</string>
     <string name="highest_rating">Highest Rating</string>
