@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.MovieGridActivity"
+    tools:showIn="@layout/activity_movie_grid">
+
+
+    <GridView
+        android:id="@+id/gridMovies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:columnWidth="@dimen/dimen_150"
+        android:numColumns="auto_fit"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
+        android:stretchMode="columnWidth" />
+
+</RelativeLayout>

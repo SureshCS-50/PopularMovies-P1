@@ -3,16 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menuSort"
-        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        app:showAsAction="ifRoom"
         android:title="@string/sort">
 
         <menu>
+            <group android:id="@+id/group_sortOrder"
+                android:checkableBehavior="single">
             <item
                 android:id="@+id/menuSortPopular"
-                android:title="@string/most_popular" />
+                android:title="@string/most_popular"
+                android:checked="true"/>
             <item
                 android:id="@+id/menuSortRating"
                 android:title="@string/highest_rating" />
+            <item
+                android:id="@+id/menuSortFavorites"
+                android:title="Favorites"/>
+            </group>
         </menu>
     </item>
 </menu>

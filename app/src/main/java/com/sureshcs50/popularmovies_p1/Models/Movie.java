@@ -1,18 +1,23 @@
-package com.sureshcs50.popularmovies_p1.model;
+package com.sureshcs50.popularmovies_p1.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by sureshkumar on 14/03/16.
  */
-public class Movie implements Parcelable {
+public class Movie extends SugarRecord implements Parcelable {
+    private String movieId;
     private String originalTitle;
     private String title;
     private String imageUrl;
     private String overview;
     private String voteAverage;
     private String releaseDate;
+    private String popularity;
+    public boolean isFavourite = false;
 
     public Movie(){
     }
@@ -24,6 +29,7 @@ public class Movie implements Parcelable {
         overview = in.readString();
         voteAverage = in.readString();
         releaseDate = in.readString();
+        popularity = in.readString();
     }
 
     @Override
@@ -33,12 +39,14 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(movieId);
         dest.writeString(originalTitle);
         dest.writeString(title);
         dest.writeString(imageUrl);
         dest.writeString(overview);
         dest.writeString(voteAverage);
         dest.writeString(releaseDate);
+        dest.writeString(popularity);
     }
 
     @SuppressWarnings("unused")
@@ -53,6 +61,14 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    public String getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
+    }
 
     public String getOriginalTitle() {
         return originalTitle;
@@ -100,5 +116,13 @@ public class Movie implements Parcelable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
     }
 }

@@ -7,4 +7,7 @@
     <string name="most_popular">Most Popular</string>
     <string name="highest_rating">Highest Rating</string>
     <string name="str_movies">Movies</string>
+    <string name="str_trailers">Trailers</string>
+    <string name="str_reviews">Reviews</string>
+    <string name="str_more">more</string>
 </resources>

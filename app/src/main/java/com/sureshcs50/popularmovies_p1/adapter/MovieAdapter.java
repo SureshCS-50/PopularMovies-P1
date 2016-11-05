@@ -1,7 +1,6 @@
 package com.sureshcs50.popularmovies_p1.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.sureshcs50.popularmovies_p1.R;
-import com.sureshcs50.popularmovies_p1.model.Movie;
+import com.sureshcs50.popularmovies_p1.Models.Movie;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
 
 import java.util.List;
@@ -73,6 +72,14 @@ public class MovieAdapter extends BaseAdapter {
             mMovies = movies;
             notifyDataSetChanged();
         }
+    }
+
+    public void addItem(Movie movie){
+        mMovies.add(movie);
+    }
+
+    public void clearItems() {
+        mMovies.clear();
     }
 
     public static class ViewHolder {

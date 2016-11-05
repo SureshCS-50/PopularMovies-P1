@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.sureshcs50.popularmovies_p1"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.satyan:sugar:1.4'
 }

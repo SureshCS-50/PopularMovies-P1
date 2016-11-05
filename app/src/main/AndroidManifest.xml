@@ -3,23 +3,46 @@
     package="com.sureshcs50.popularmovies_p1">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="PopularMoviesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MovieGridActivity"
-            android:label="@string/str_movies">
+        <activity
+            android:name=".ui.activity.MovieGridActivity"
+            android:label="@string/str_movies"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activity.DetailActivity"
+            android:parentActivityName=".ui.activity.MovieGridActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sureshcs50.popularmovies_p1.ui.activity.MovieGridActivity" />
+        </activity>
+
+        <meta-data
+            android:name="DATABASE"
+            android:value="popular_movies.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.sureshcs50.popularmovies_p1.Models" />
     </application>
 
 </manifest>

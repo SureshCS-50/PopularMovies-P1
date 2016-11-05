@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.sureshcs50.popularmovies_p1.R;
-import com.sureshcs50.popularmovies_p1.model.Movie;
+import com.sureshcs50.popularmovies_p1.Models.Movie;
 import com.sureshcs50.popularmovies_p1.ui.common.BaseActivity;
+import com.sureshcs50.popularmovies_p1.ui.fragment.DetailsFragment;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
 import com.sureshcs50.popularmovies_p1.utils.Utils;
 
@@ -43,18 +44,12 @@ public class DetailActivity extends BaseActivity {
 
         // bind view and data..
         if (mMovie != null) {
-            String backdropUrl = Constants.POSTER_BASE_URL + "w300" + mMovie.getImageUrl();
-            Picasso.with(this).load(backdropUrl ).into((ImageView) findViewById(R.id.imgBackdrop));
-            String posterUrl = Constants.POSTER_BASE_URL + "w185" + mMovie.getImageUrl();
-            Picasso.with(this).load(posterUrl).into((ImageView) findViewById(R.id.imgPoster));
-            ((TextView) findViewById(R.id.txtTitle)).setText(mMovie.getOriginalTitle());
-            ((TextView) findViewById(R.id.txtRating)).setText("User Rating : " + mMovie.getVoteAverage());
-            ((TextView) findViewById(R.id.txtRelease)).setText("Release Date : " + mMovie.getReleaseDate());
-            ((TextView) findViewById(R.id.txtSynopsis)).setText(mMovie.getOverview());
             mCollapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             mCollapsingToolbar.setExpandedTitleColor(Color.WHITE);
             mCollapsingToolbar.setTitle(mMovie.getTitle());
         }
 
+        DetailsFragment detailsFragment = (DetailsFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentDetails);
+        detailsFragment.movie = mMovie;
     }
 }
