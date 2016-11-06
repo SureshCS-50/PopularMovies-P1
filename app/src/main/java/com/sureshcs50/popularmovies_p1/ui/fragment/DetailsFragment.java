@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -127,7 +128,6 @@ public class DetailsFragment extends Fragment {
 
     public void updateUI() {
         mToolbar = (Toolbar) mContentView.findViewById(R.id.toolbar);
-        ((BaseActivity)getActivity()).setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(Utils.getColoredDrawable(getActivity(), R.drawable.abc_ic_ab_back_mtrl_am_alpha, 0xFFFFFFFF));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +143,7 @@ public class DetailsFragment extends Fragment {
             mCollapsingToolbar.setExpandedTitleColor(Color.WHITE);
             mCollapsingToolbar.setTitle(movie.getTitle());
         }
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
 
         if (movie.isFavourite == 1)
             fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));

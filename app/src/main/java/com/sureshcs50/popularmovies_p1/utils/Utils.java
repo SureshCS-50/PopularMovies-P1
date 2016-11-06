@@ -7,6 +7,8 @@ import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,4 +57,5 @@ public class Utils {
 
         return false;
     }
+
 }
