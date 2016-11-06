@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,6 +133,7 @@ public class MovieGridFragment extends Fragment {
                                 movie.setReleaseDate(movieObj.getString("release_date"));
                                 movie.setVoteAverage(String.valueOf(movieObj.getDouble("vote_average")));
                                 movie.setPopularity(String.valueOf(movieObj.getDouble("popularity")));
+                                movie.isFavourite = 0;
                                 movie.save();
                                 mMovies.add(movie);
                                 // Add image to adapter
@@ -153,7 +155,7 @@ public class MovieGridFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("", "Network error");
             }
         });
 
@@ -191,16 +193,15 @@ public class MovieGridFragment extends Fragment {
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             if (isDualPane) {
                 android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                DetailsFragment mDetailsFragment = DetailsFragment.newInstance(mMovies.get(position));
+                DetailsFragment mDetailsFragment = DetailsFragment.newInstance(mMovies.get(position).getMovieId());
                 ft.replace(R.id.detailContainer, mDetailsFragment);
                 ft.commit();
             } else {
                 Intent intent = new Intent(getContext(), DetailActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, (Parcelable) mMovies.get(position));
+                intent.putExtra(Constants.KEY_MOVIE, mMovies.get(position).getMovieId());
                 startActivity(intent);
             }
         }
     }
-
 
 }

@@ -31,7 +31,7 @@ public class DataManager {
         List<Movie> movies = Movie.find(Movie.class, "is_favourite = ?", new String[]{"1"}, null, null, "1");
         if (movies != null && movies.size() > 0) {
             Movie movie = movies.get(0);
-            if(movie.isFavourite){
+            if(movie.isFavourite == 1){
                 return true;
             } else {
                 return false;
@@ -43,7 +43,7 @@ public class DataManager {
     public void toggleFavourite(String movieId) {
         Movie movie = getMovieById(movieId);
         if(movie != null){
-            movie.isFavourite = !movie.isFavourite;
+            movie.isFavourite = (movie.isFavourite == 1) ? 0: 1;
             movie.save();
         }
     }

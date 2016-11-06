@@ -1,14 +1,18 @@
 package com.sureshcs50.popularmovies_p1.ui.fragment;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +39,7 @@ import com.sureshcs50.popularmovies_p1.R;
 import com.sureshcs50.popularmovies_p1.adapter.TrailerAdapter;
 import com.sureshcs50.popularmovies_p1.helpers.DataManager;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
+import com.sureshcs50.popularmovies_p1.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,15 +65,18 @@ public class DetailsFragment extends Fragment {
     private List<Trailer> mTrailers;
     private List<Review> mReviews;
     private ShareActionProvider mShareActionProvider;
+    private Toolbar mToolbar;
+    private CollapsingToolbarLayout mCollapsingToolbar;
+    private String movieId = "";
 
     public DetailsFragment() {
         mInstance = this;
     }
 
-    public static DetailsFragment newInstance(Movie newMovie) {
+    public static DetailsFragment newInstance(String movieId) {
         Bundle args = new Bundle();
         DetailsFragment fragment = new DetailsFragment();
-        args.putParcelable(Constants.KEY_MOVIE, newMovie);
+        args.putString(Constants.KEY_MOVIE, movieId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,7 +86,7 @@ public class DetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null)
-            movie = getArguments().getParcelable(Constants.KEY_MOVIE);
+            movieId = getArguments().getString(Constants.KEY_MOVIE);
         mDataManager = new DataManager();
         mTrailers = new ArrayList<>();
         mReviews = new ArrayList<>();
@@ -88,6 +96,7 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_details, container, false);
+        movie = mDataManager.getMovieById(movieId);
         //  get UI components
         mLytTrailerList = (LinearLayout) mContentView.findViewById(R.id.lytTrailers);
         mLytReviewList = (LinearLayout) mContentView.findViewById(R.id.lytReviews);
@@ -116,8 +125,25 @@ public class DetailsFragment extends Fragment {
     }
 
     public void updateUI() {
-        boolean favStatus = mDataManager.isMovieFavourited(movie.getMovieId());
-        if (favStatus)
+        mToolbar = (Toolbar) mContentView.findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(Utils.getColoredDrawable(getActivity(), R.drawable.abc_ic_ab_back_mtrl_am_alpha, Color.WHITE));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        mCollapsingToolbar = (CollapsingToolbarLayout) mContentView.findViewById(R.id.collapsingToolbar);
+        // bind view and data..
+        if (movie != null) {
+            mCollapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+            mCollapsingToolbar.setExpandedTitleColor(Color.WHITE);
+            mCollapsingToolbar.setTitle(movie.getTitle());
+        }
+
+        if (movie.isFavourite == 1)
             fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));
         else
             fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_off));

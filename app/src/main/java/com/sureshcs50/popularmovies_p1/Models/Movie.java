@@ -17,7 +17,7 @@ public class Movie extends SugarRecord implements Parcelable {
     private String voteAverage;
     private String releaseDate;
     private String popularity;
-    public boolean isFavourite = false;
+    public int isFavourite = 0;
 
     public Movie(){
     }
