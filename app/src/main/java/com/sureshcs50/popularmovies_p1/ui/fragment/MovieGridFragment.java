@@ -137,11 +137,12 @@ public class MovieGridFragment extends Fragment {
                                 movie.save();
                                 mMovies.add(movie);
                                 // Add image to adapter
-                                mMovieAdapter.addItem(movie);
+//                                mMovieAdapter.addItem(movie);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        mMovieAdapter.setItems(mMovies);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

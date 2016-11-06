@@ -1,7 +1,6 @@
 package com.sureshcs50.popularmovies_p1.ui.fragment;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -284,12 +283,15 @@ public class DetailsFragment extends Fragment {
         @Override
         public void onClick(View view) {
             mDataManager.toggleFavourite(movie.getMovieId());
+
             String message;
-            if (mDataManager.isMovieFavourited(movie.getMovieId())) {
+            if (movie.isFavourite == 1) {
                 message = "Removed from Favorites";
+                movie.isFavourite = 0;
                 fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_off));
             } else {
                 message = "Added to favorites";
+                movie.isFavourite = 1;
                 fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));
             }
             (MovieGridFragment.mInstance).updateFavoritesGrid();

@@ -19,8 +19,8 @@ public class DataManager {
         return new ArrayList<Movie>();
     }
 
-    public Movie getMovieById(String movieId){
-        List<Movie> movies = Movie.find(Movie.class, "is_favourite = ?", new String[]{"1"}, null, null, null);
+    public Movie getMovieById(String movieId) {
+        List<Movie> movies = Movie.find(Movie.class, "movie_id = ?", new String[]{movieId}, null, null, null);
         if (movies != null && movies.size() > 0) {
             return movies.get(0);
         }
@@ -28,22 +28,23 @@ public class DataManager {
     }
 
     public boolean isMovieFavourited(String movieId) {
-        List<Movie> movies = Movie.find(Movie.class, "is_favourite = ?", new String[]{"1"}, null, null, "1");
+        List<Movie> movies = Movie.find(Movie.class, "movie_id = ?", new String[]{movieId}, null, null, null);
         if (movies != null && movies.size() > 0) {
             Movie movie = movies.get(0);
-            if(movie.isFavourite == 1){
+            if (movie.isFavourite == 1) {
                 return true;
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
-        return false;
     }
 
     public void toggleFavourite(String movieId) {
         Movie movie = getMovieById(movieId);
-        if(movie != null){
-            movie.isFavourite = (movie.isFavourite == 1) ? 0: 1;
+        if (movie != null) {
+            movie.isFavourite = (movie.isFavourite == 1) ? 0 : 1;
             movie.save();
         }
     }
