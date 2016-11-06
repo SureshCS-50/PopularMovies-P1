@@ -3,7 +3,6 @@ package com.sureshcs50.popularmovies_p1.ui.fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,6 +112,7 @@ public class MovieGridFragment extends Fragment {
     }
 
     public void getMovies(String sortOrder, String moreParams) {
+        final DataManager dataManager = new DataManager();
         String url = "http://api.themoviedb.org/3/discover/movie?sort_by=" + sortOrder + "&" + moreParams
                 + "&api_key=" + Constants.API_KEY;
         JsonObjectRequest req = new JsonObjectRequest(url, null,
@@ -120,24 +120,25 @@ public class MovieGridFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Movie.deleteAll(Movie.class);
                             JSONArray items = response.getJSONArray("results");
                             JSONObject movieObj;
                             for (int i = 0; i < items.length(); i++) {
                                 movieObj = items.getJSONObject(i);
-                                Movie movie = new Movie();
-                                movie.setMovieId(movieObj.getString("id"));
+                                String movieId = movieObj.getString("id");
+                                Movie movie = dataManager.getMovieById(movieId);
+                                if(movie == null)
+                                    movie = new Movie();
+                                movie.setMovieId(movieId);
+                                movie.setTitle(movieObj.getString("title"));
                                 movie.setOriginalTitle(movieObj.getString("original_title"));
                                 movie.setOverview(movieObj.getString("overview"));
                                 movie.setImageUrl(movieObj.getString("poster_path"));
                                 movie.setReleaseDate(movieObj.getString("release_date"));
                                 movie.setVoteAverage(String.valueOf(movieObj.getDouble("vote_average")));
                                 movie.setPopularity(String.valueOf(movieObj.getDouble("popularity")));
-                                movie.isFavourite = 0;
                                 movie.save();
                                 mMovies.add(movie);
                                 // Add image to adapter
-//                                mMovieAdapter.addItem(movie);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

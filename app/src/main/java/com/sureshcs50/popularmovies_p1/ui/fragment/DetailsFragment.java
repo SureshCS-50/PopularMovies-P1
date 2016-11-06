@@ -37,6 +37,8 @@ import com.sureshcs50.popularmovies_p1.Models.Trailer;
 import com.sureshcs50.popularmovies_p1.R;
 import com.sureshcs50.popularmovies_p1.adapter.TrailerAdapter;
 import com.sureshcs50.popularmovies_p1.helpers.DataManager;
+import com.sureshcs50.popularmovies_p1.ui.activity.DetailActivity;
+import com.sureshcs50.popularmovies_p1.ui.common.BaseActivity;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
 import com.sureshcs50.popularmovies_p1.utils.Utils;
 
@@ -125,8 +127,8 @@ public class DetailsFragment extends Fragment {
 
     public void updateUI() {
         mToolbar = (Toolbar) mContentView.findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(Utils.getColoredDrawable(getActivity(), R.drawable.abc_ic_ab_back_mtrl_am_alpha, Color.WHITE));
+        ((BaseActivity)getActivity()).setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(Utils.getColoredDrawable(getActivity(), R.drawable.abc_ic_ab_back_mtrl_am_alpha, 0xFFFFFFFF));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
