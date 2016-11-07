@@ -1,5 +1,5 @@
 # PopularMovies-P1
-P1: Popular Movies - Stage 1 - Udacity Android Nanodegree Project.
+P1: Popular Movies - Stage 1 & 2 - Udacity Android Nanodegree Project.
 
 # Installation
 
