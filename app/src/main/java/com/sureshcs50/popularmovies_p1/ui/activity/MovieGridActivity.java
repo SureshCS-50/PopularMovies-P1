@@ -1,15 +1,15 @@
 package com.sureshcs50.popularmovies_p1.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.sureshcs50.popularmovies_p1.R;
-import com.sureshcs50.popularmovies_p1.ui.common.BaseActivity;
 import com.sureshcs50.popularmovies_p1.ui.fragment.MovieGridFragment;
 
-public class MovieGridActivity extends BaseActivity {
+public class MovieGridActivity extends AppCompatActivity {
 
     static int activeId = 0;
 
@@ -40,11 +40,9 @@ public class MovieGridActivity extends BaseActivity {
         MovieGridFragment fragment = MovieGridFragment.mInstance;
 
         if (id == R.id.menuSortRating) {
-            fragment.sortOrder = "vote_average.desc";
-            fragment.params = "vote_count.gte=50&include_video=false";
+            fragment.isRatingUrl = true;
         } else if (id == R.id.menuSortPopular) {
-            fragment.sortOrder = "popularity.desc";
-            fragment.params = "";
+            fragment.isRatingUrl = false;
         }
         item.setChecked(true);
         if (id == R.id.menuSortPopular || id == R.id.menuSortRating) {

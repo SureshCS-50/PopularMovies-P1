@@ -32,14 +32,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
-import com.sureshcs50.popularmovies_p1.Models.Movie;
-import com.sureshcs50.popularmovies_p1.Models.Review;
-import com.sureshcs50.popularmovies_p1.Models.Trailer;
 import com.sureshcs50.popularmovies_p1.R;
 import com.sureshcs50.popularmovies_p1.adapter.TrailerAdapter;
 import com.sureshcs50.popularmovies_p1.helpers.DataManager;
-import com.sureshcs50.popularmovies_p1.ui.activity.DetailActivity;
-import com.sureshcs50.popularmovies_p1.ui.common.BaseActivity;
+import com.sureshcs50.popularmovies_p1.models.Movie;
+import com.sureshcs50.popularmovies_p1.models.Review;
+import com.sureshcs50.popularmovies_p1.models.Trailer;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
 import com.sureshcs50.popularmovies_p1.utils.Utils;
 
@@ -143,7 +141,7 @@ public class DetailsFragment extends Fragment {
             mCollapsingToolbar.setExpandedTitleColor(Color.WHITE);
             mCollapsingToolbar.setTitle(movie.getTitle());
         }
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
         if (movie.isFavourite == 1)
             fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));

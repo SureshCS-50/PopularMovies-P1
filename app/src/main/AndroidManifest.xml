@@ -42,7 +42,7 @@
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.sureshcs50.popularmovies_p1.Models" />
+            android:value="com.sureshcs50.popularmovies_p1.models" />
     </application>
 
 </manifest>

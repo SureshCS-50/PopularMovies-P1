@@ -10,4 +10,5 @@
     <string name="str_trailers">Trailers</string>
     <string name="str_reviews">Reviews</string>
     <string name="str_more">more</string>
+    <string name="str_poster_image">Poster Image</string>
 </resources>

@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.sureshcs50.popularmovies_p1.Models.Trailer;
 import com.sureshcs50.popularmovies_p1.R;
+import com.sureshcs50.popularmovies_p1.models.Trailer;
 import com.sureshcs50.popularmovies_p1.ui.fragment.DetailsFragment;
 
 import java.util.ArrayList;
@@ -29,46 +29,46 @@ public class TrailerAdapter extends BaseAdapter {
         this.mTrailers = trailers;
     }
 
-        @Override
-        public int getCount() {
-            return mTrailers.size();
-        }
+    @Override
+    public int getCount() {
+        return mTrailers.size();
+    }
 
-        @Override
-        public Object getItem(int i) {
-            return mTrailers.get(i);
-        }
+    @Override
+    public Object getItem(int i) {
+        return mTrailers.get(i);
+    }
 
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
 
-        @Override
-        public View getView(int i, View convertView, ViewGroup viewGroup) {
-            View trailerRow;
-            if (convertView == null) {
-                trailerRow = View.inflate(mContext, R.layout.item_trailer, null);
-            } else {
-                trailerRow = convertView;
+    @Override
+    public View getView(int i, View convertView, ViewGroup viewGroup) {
+        View trailerRow;
+        if (convertView == null) {
+            trailerRow = View.inflate(mContext, R.layout.item_trailer, null);
+        } else {
+            trailerRow = convertView;
+        }
+        trailerRow.setId(1000 + i);
+        ((TextView) trailerRow.findViewById(R.id.txtTrailerName)).setText(mTrailers.get(i).label);
+        Picasso.with(mContext).load("http://img.youtube.com/vi/" + mTrailers.get(i).url + "/default.jpg")
+                .placeholder(R.mipmap.ic_launcher)
+                .into((ImageView) trailerRow.findViewById(R.id.imgTrailer));
+
+        final String url = mTrailers.get(i).url;
+        trailerRow.findViewById(R.id.imgTrailer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DetailsFragment.mInstance.watchYoutubeVideo(url);
             }
-            trailerRow.setId(1000 + i);
-            ((TextView) trailerRow.findViewById(R.id.txtTrailerName)).setText(mTrailers.get(i).label);
-            Picasso.with(mContext).load("http://img.youtube.com/vi/" + mTrailers.get(i).url + "/default.jpg")
-                    .placeholder(R.mipmap.ic_launcher)
-                    .into((ImageView) trailerRow.findViewById(R.id.imgTrailer));
+        });
+        return trailerRow;
+    }
 
-            final String url = mTrailers.get(i).url;
-            trailerRow.findViewById(R.id.imgTrailer).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DetailsFragment.mInstance.watchYoutubeVideo(url);
-                }
-            });
-            return trailerRow;
-        }
-
-    public void addItem(Trailer trailer){
+    public void addItem(Trailer trailer) {
         mTrailers.add(trailer);
     }
 

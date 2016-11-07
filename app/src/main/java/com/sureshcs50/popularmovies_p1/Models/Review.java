@@ -1,4 +1,4 @@
-package com.sureshcs50.popularmovies_p1.Models;
+package com.sureshcs50.popularmovies_p1.models;
 
 /**
  * Created by Sureshkumar on 05/11/16.

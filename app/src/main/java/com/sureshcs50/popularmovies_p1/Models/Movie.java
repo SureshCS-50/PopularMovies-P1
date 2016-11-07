@@ -1,4 +1,4 @@
-package com.sureshcs50.popularmovies_p1.Models;
+package com.sureshcs50.popularmovies_p1.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,6 +9,19 @@ import com.orm.SugarRecord;
  * Created by sureshkumar on 14/03/16.
  */
 public class Movie extends SugarRecord implements Parcelable {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+    public int isFavourite = 0;
     private String movieId;
     private String originalTitle;
     private String title;
@@ -17,9 +30,8 @@ public class Movie extends SugarRecord implements Parcelable {
     private String voteAverage;
     private String releaseDate;
     private String popularity;
-    public int isFavourite = 0;
 
-    public Movie(){
+    public Movie() {
     }
 
     public Movie(Parcel in) {
@@ -48,19 +60,6 @@ public class Movie extends SugarRecord implements Parcelable {
         dest.writeString(releaseDate);
         dest.writeString(popularity);
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
 
     public String getMovieId() {
         return movieId;

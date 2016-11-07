@@ -1,6 +1,7 @@
 package com.sureshcs50.popularmovies_p1.helpers;
 
-import com.sureshcs50.popularmovies_p1.Models.Movie;
+
+import com.sureshcs50.popularmovies_p1.models.Movie;
 
 import java.util.ArrayList;
 import java.util.List;

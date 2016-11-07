@@ -3,13 +3,13 @@ package com.sureshcs50.popularmovies_p1.ui.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import com.sureshcs50.popularmovies_p1.R;
-import com.sureshcs50.popularmovies_p1.ui.common.BaseActivity;
 import com.sureshcs50.popularmovies_p1.ui.fragment.DetailsFragment;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
 
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends AppCompatActivity {
 
     private FragmentManager fm = null;
     private FragmentTransaction fragmentTransaction = null;

@@ -2,6 +2,7 @@ package com.sureshcs50.popularmovies_p1.ui.fragment;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,10 +18,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.sureshcs50.popularmovies_p1.Models.Movie;
 import com.sureshcs50.popularmovies_p1.R;
 import com.sureshcs50.popularmovies_p1.adapter.MovieAdapter;
 import com.sureshcs50.popularmovies_p1.helpers.DataManager;
+import com.sureshcs50.popularmovies_p1.models.Movie;
 import com.sureshcs50.popularmovies_p1.ui.activity.DetailActivity;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
 
@@ -28,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +38,7 @@ import java.util.ArrayList;
 
 public class MovieGridFragment extends Fragment {
     public static MovieGridFragment mInstance;
-    public static String sortOrder = "popularity.desc", params = "";
+    public static boolean isRatingUrl = false;
     public static boolean setting_cached = false;
     public View mViewFragment;
     public ArrayList<Movie> mMovies = new ArrayList<Movie>();
@@ -106,62 +108,76 @@ public class MovieGridFragment extends Fragment {
         mMovieAdapter.clearItems();
         setting_cached = cached;
         if (!cached)
-            getMovies(sortOrder, params);
+            getMovies(isRatingUrl);
         else
             getFavorites();
     }
 
-    public void getMovies(String sortOrder, String moreParams) {
-        final DataManager dataManager = new DataManager();
-        String url = "http://api.themoviedb.org/3/discover/movie?sort_by=" + sortOrder + "&" + moreParams
-                + "&api_key=" + Constants.API_KEY;
-        JsonObjectRequest req = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray items = response.getJSONArray("results");
-                            JSONObject movieObj;
-                            for (int i = 0; i < items.length(); i++) {
-                                movieObj = items.getJSONObject(i);
-                                String movieId = movieObj.getString("id");
-                                Movie movie = dataManager.getMovieById(movieId);
-                                if(movie == null)
-                                    movie = new Movie();
-                                movie.setMovieId(movieId);
-                                movie.setTitle(movieObj.getString("title"));
-                                movie.setOriginalTitle(movieObj.getString("original_title"));
-                                movie.setOverview(movieObj.getString("overview"));
-                                movie.setImageUrl(movieObj.getString("poster_path"));
-                                movie.setReleaseDate(movieObj.getString("release_date"));
-                                movie.setVoteAverage(String.valueOf(movieObj.getDouble("vote_average")));
-                                movie.setPopularity(String.valueOf(movieObj.getDouble("popularity")));
-                                movie.save();
-                                mMovies.add(movie);
-                                // Add image to adapter
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        mMovieAdapter.setItems(mMovies);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mGridview.setAdapter(mMovieAdapter);
-                                if (gridPos > -1)
-                                    mGridview.setSelection(gridPos);
-                                gridPos = -1;
-                            }
-                        });
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("", "Network error");
-            }
-        });
+    public void getMovies(boolean isRatingUrl) {
+        try {
+            final DataManager dataManager = new DataManager();
+            String type = (isRatingUrl) ? Constants.TYPE_TOP_RATED : Constants.TYPE_POPULAR;
 
-        mRequestQueue.add(req);
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("http")
+                    .authority(Constants.BASE_URL)
+                    .appendPath(Constants.API_VERSION)
+                    .appendPath(Constants.API_CATEGORY)
+                    .appendPath(type)
+                    .appendQueryParameter("api_key", Constants.API_KEY);
+
+            String url = builder.build().toString();
+
+            JsonObjectRequest req = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray items = response.getJSONArray("results");
+                                JSONObject movieObj;
+                                for (int i = 0; i < items.length(); i++) {
+                                    movieObj = items.getJSONObject(i);
+                                    String movieId = movieObj.getString("id");
+                                    Movie movie = dataManager.getMovieById(movieId);
+                                    if (movie == null)
+                                        movie = new Movie();
+                                    movie.setMovieId(movieId);
+                                    movie.setTitle(movieObj.getString("title"));
+                                    movie.setOriginalTitle(movieObj.getString("original_title"));
+                                    movie.setOverview(movieObj.getString("overview"));
+                                    movie.setImageUrl(movieObj.getString("poster_path"));
+                                    movie.setReleaseDate(movieObj.getString("release_date"));
+                                    movie.setVoteAverage(String.valueOf(movieObj.getDouble("vote_average")));
+                                    movie.setPopularity(String.valueOf(movieObj.getDouble("popularity")));
+                                    movie.save();
+                                    mMovies.add(movie);
+                                    // Add image to adapter
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            mMovieAdapter.setItems(mMovies);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mGridview.setAdapter(mMovieAdapter);
+                                    if (gridPos > -1)
+                                        mGridview.setSelection(gridPos);
+                                    gridPos = -1;
+                                }
+                            });
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("", "Network error");
+                }
+            });
+
+            mRequestQueue.add(req);
+        } catch(MalformedURLException exception){
+            Log.d("", "MalformedURLException");
+        }
     }
 
     public void getFavorites() {

@@ -19,31 +19,32 @@
                 android:id="@+id/imgPoster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_4"/>
+                android:layout_marginLeft="@dimen/dimen_4"
+                android:contentDescription="@string/str_poster_image"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/imgPoster"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/dimen_6"
+                android:layout_toRightOf="@+id/imgPoster"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txtTitle"
                     style="@style/TextView.Content"
                     android:padding="@dimen/dimen_2"
-                    android:textColor="@color/colorTextPrimary"/>
+                    android:textColor="@color/colorTextPrimary" />
 
                 <TextView
                     android:id="@+id/txtRating"
-                    android:padding="@dimen/dimen_2"
-                    style="@style/TextView.Content" />
+                    style="@style/TextView.Content"
+                    android:padding="@dimen/dimen_2" />
 
                 <TextView
                     android:id="@+id/txtRelease"
-                    android:padding="@dimen/dimen_2"
-                    style="@style/TextView.Content" />
+                    style="@style/TextView.Content"
+                    android:padding="@dimen/dimen_2" />
 
             </LinearLayout>
 
@@ -52,8 +53,8 @@
         <TextView
             android:id="@+id/txtSynopsis"
             style="@style/TextView.Content"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:layout_below="@+id/lytHead" />
+            android:layout_below="@+id/lytHead"
+            android:layout_marginTop="@dimen/dimen_8" />
 
         <TextView
             android:id="@+id/txtTrailer"
@@ -61,35 +62,33 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtSynopsis"
             android:layout_marginTop="@dimen/dimen_16"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:text="@string/str_trailers"/>
+            android:text="@string/str_trailers"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <LinearLayout
             android:id="@+id/lytTrailers"
-            android:layout_below="@+id/txtTrailer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTrailer"
             android:layout_marginTop="@dimen/dimen_16"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"/>
 
         <TextView
             android:id="@+id/txtReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lytTrailers"
-            android:textSize="20sp"
+            android:layout_marginTop="@dimen/dimen_16"
             android:text="@string/str_reviews"
-            android:layout_marginTop="@dimen/dimen_16"/>
+            android:textSize="20sp" />
 
         <LinearLayout
             android:id="@+id/lytReviews"
-            android:layout_below="@+id/txtReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/txtReview"
             android:layout_marginTop="@dimen/dimen_16"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"/>
 
     </RelativeLayout>
 

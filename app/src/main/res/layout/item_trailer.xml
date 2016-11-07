@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/dimen_4"
-    android:paddingTop="@dimen/dimen_4"
     android:paddingLeft="@dimen/dimen_16"
     android:paddingRight="@dimen/dimen_16"
-    android:orientation="horizontal">
+    android:paddingTop="@dimen/dimen_4">
 
     <ImageView
         android:id="@+id/imgTrailer"
@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/dimen_16"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 </LinearLayout>

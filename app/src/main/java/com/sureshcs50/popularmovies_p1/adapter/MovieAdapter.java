@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.sureshcs50.popularmovies_p1.R;
-import com.sureshcs50.popularmovies_p1.Models.Movie;
+import com.sureshcs50.popularmovies_p1.models.Movie;
 import com.sureshcs50.popularmovies_p1.utils.Constants;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class MovieAdapter extends BaseAdapter {
 
         Movie movie = getItem(position);
         viewHolder.txtMovieName.setText(movie.getTitle());
-        String imageURL = Constants.POSTER_BASE_URL+"w185/"+ movie.getImageUrl();
+        String imageURL = Constants.POSTER_BASE_URL + "w185/" + movie.getImageUrl();
         Picasso.with(mContext).load(imageURL).into(viewHolder.imgPoster);
 
         return view;
@@ -74,7 +74,7 @@ public class MovieAdapter extends BaseAdapter {
         }
     }
 
-    public void addItem(Movie movie){
+    public void addItem(Movie movie) {
         mMovies.add(movie);
     }
 
